@@ -16,7 +16,7 @@ LPORT = 1234
 s.bind((LISTENER_IP,LPORT))
 
 s.listen()
-print("Listening for {} from {}".format(LISTENER_HOSTNAME,LISTENER_IP))
+print("Listening on {} from {}".format(LISTENER_HOSTNAME,LISTENER_IP))
 client_socket, client_addr = s.accept()
 
 print("Client {} has connected on {}".format(client_addr[0], client_addr[1]))
@@ -25,4 +25,13 @@ print("Client {} has connected on {}".format(client_addr[0], client_addr[1]))
 while True:
 
     #Command to send to the client
-    command2Send = input("{}>".format(client_addr[0]))
+    command2Send = input("enter command for {}>".format(client_addr[0]))
+    client_socket.send(command2Send.encode())
+    #Close the program
+    if command2Send.lower() =="exit":
+        break
+    commandResults = s.recv(1024).decode()
+    print(commandResults)
+#End connection with client and close server connections
+client_socket.close()
+s.close()

